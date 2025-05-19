@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ResizeObserver Test</title>
+<style>
+    #container {
+        width: 500px; /* 初期サイズ */
+        height: auto;
+        border: 1px solid #ccc;
+    }
+    #image {
+        max-width: 100%;
+        height: auto;
+    }
+    #description {
+        display: none; /* 最初は非表示 */
+        padding: 10px;
+        background-color: #f0f0f0;
+    }
+</style>
+</head>
+<body>
+
+<div id="container">
+    <img id="image" src="MILK.JPG" alt="Sample Image">
+    <div id="description">これはサンプル画像の説明文です。ウィンドウサイズが小さくなると表示されます。</div>
+</div>
+
+<script>
+    const container = document.getElementById('container');
+    const image = document.getElementById('image');
+    const description = document.getElementById('description');
+
+    // ResizeObserverのインスタンスを作成
+    const observer = new ResizeObserver(entries => {
+    entries.forEach(entry => {
+        const containerWidth = entry.contentRect.width;
+
+        // コンテナの幅が500pxより小さい場合に説明文を表示、画像を非表示にする
+        if (containerWidth < 500) {
+        image.style.display = 'none';
+        description.style.display = 'block';
+        } else {
+        image.style.display = 'block';
+        description.style.display = 'none';
+        }
+        console.log('Container width:', containerWidth); // 動作確認用
+    });
+    });
+
+    // コンテナ要素の監視を開始
+    observer.observe(container);
+
+    console.log('container:', container);
+    console.log('image:', image);
+    console.log('description:', description);
+</script>
+
+</body>
+</html>
